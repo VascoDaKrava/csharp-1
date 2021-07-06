@@ -13,14 +13,31 @@ namespace Lesson2
     {
         static void Main(string[] args)
         {
+            goto Next;
+
             #region Задание 1
             // 1. Написать метод, возвращающий минимальное из трёх чисел.
-            #endregion
+            Console.WriteLine("Задание 1. Минимальное из трёх.\n");
+            Console.Write("Введите первое значение : ");
+            int a = int.Parse(Console.ReadLine());
+            Console.Write("Введите второе значение : ");
+            int b = int.Parse(Console.ReadLine());
+            Console.Write("Введите третье значение : ");
+            int c = int.Parse(Console.ReadLine());
+            Console.WriteLine($"\nМинимальное значение : {getMin(a, b, c)}");
+            next();
+        #endregion
 
             #region Задание 2
             // 2. Написать метод подсчета количества цифр числа.
+            Console.WriteLine("Задание 2. Количество цифр в числе.\n");
+            Console.Write("Введите число : ");
+            a = int.Parse(Console.ReadLine());
+            Console.WriteLine($"Количество цифр : {quantityDigits(a)}");
+            next();
             #endregion
 
+        Next:;
             #region Задание 3
             // 3. С клавиатуры вводятся числа, пока не будет введен 0. Подсчитать сумму всех нечетных положительных чисел.
             #endregion
@@ -47,6 +64,45 @@ namespace Lesson2
             //    б) *Разработать рекурсивный метод, который считает сумму чисел от a до b.
             #endregion
 
+        }
+
+
+        /// <summary>
+        /// Подсчёт количества цифр с использованием рекурсии
+        /// </summary>
+        /// <param name="a"></param>
+        /// <returns></returns>
+        static int quantityDigits(int a)
+        {
+            // Если число не делится на 10, то это одна цифра. Иначе убираем один разряд делением на 10 и вызываем себя рекурсивно
+            if (a / 10 == 0)
+                return 1;
+            else
+                return quantityDigits(a / 10) + 1;
+        }
+
+
+        /// <summary>
+        /// По нажатию Enter очищает экран
+        /// </summary>
+        static void next()
+        {
+            Console.Write("\nДля продолжения нажмите Enter..");
+            Console.ReadLine();
+            Console.Clear();
+        }
+
+        /// <summary>
+        /// Поиск минимального из трёх значений
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        static int getMin(int a, int b, int c)
+        {
+            int min = a < b ? a : b;
+            return min < c ? min : c;
         }
     }
 }
