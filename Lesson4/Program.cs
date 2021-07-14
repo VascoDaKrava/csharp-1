@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 /// <summary>
 /// Автор - Кравчук Василий
@@ -9,29 +10,62 @@ namespace Lesson4
     {
         static void Main(string[] args)
         {
+            goto Label;
             #region Задание 1. Массив и пары, в которых только одно число делится на 3
             // 1. Дан целочисленный массив из 20 элементов. Элементы массива могут принимать целые значения от –10 000 до 10 000 включительно.
             //    Заполнить случайными числами. Написать программу, позволяющую найти и вывести количество пар элементов массива,
             //    в которых только одно число делится на 3. В данной задаче под парой подразумевается два подряд идущих элемента массива.
             //    Например, для массива из пяти элементов: 6; 2; 9; –3; 6 ответ — 2.
-            #endregion
+            Console.WriteLine("Задание 1. Массив и пары, в которых только одно число делится на 3.\n");
+            int arrT1_length = 20;
+            int arrT1_minValue = -10000;
+            int arrT1_maxValue = 10000;
+            int[] arrT1 = new int[arrT1_length];
+            Random rand = new Random();
+
+            Console.WriteLine("Сгенерированный массив :\n");
+            for (int i = 0; i < arrT1_length; i++)
+            {
+                arrT1[i] = rand.Next(arrT1_minValue, arrT1_maxValue + 1);
+                Console.WriteLine($"{i + 1:D2}. {arrT1[i]}, остаток от деления на 3 = {arrT1[i] % 3}");
+            }
+            Console.WriteLine($"\n\nКоличество искомых пар : {countOfPairDiv3(arrT1)}");
+
+            next();
+        #endregion
 
             #region Задание 2. Статический класс
             // 2. Реализуйте задачу 1 в виде статического класса StaticClass;
             //    а) Класс должен содержать статический метод, который принимает на вход массив и решает задачу 1;
             //    б) * Добавьте статический метод для считывания массива из текстового файла. Метод должен возвращать массив целых чисел;
             //    в) ** Добавьте обработку ситуации отсутствия файла на диске.
+            Console.WriteLine("Задание 2. Статический класс, считывание массива из текстового файла.\n");
+            string sourceFile = "./TextFile1.txt";
+
+            int[] arrT2 = ArrayTask2.ReadArrayFromFile(sourceFile);
+
+            Console.WriteLine($"Массив, считанный из файла {sourceFile} :\n");
+            for (int i = 0; i < arrT2.Length; i++)
+            {
+                Console.WriteLine($"{i + 1:D2}. {arrT2[i]}, остаток от деления на 3 = {arrT2[i] % 3}");
+            }
+            Console.WriteLine($"\n\nКоличество искомых пар : {ArrayTask2.CountOfPairDiv3(arrT2)}");
+
+            next();
             #endregion
 
+        Label:;
             #region Задание 3. Доработка класса
-            // 3. а) Дописать класс для работы с одномерным массивом. Реализовать конструктор, создающий массив определенного размера и
-            //    заполняющий массив числами от начального значения с заданным шагом.
+            // 3. а) Дописать класс для работы с одномерным массивом.
+            //    Реализовать конструктор, создающий массив определенного размера и заполняющий массив числами от начального значения с заданным шагом.
             //    Создать свойство Sum, которое возвращает сумму элементов массива,
             //    метод Inverse, возвращающий новый массив с измененными знаками у всех элементов массива (старый массив, остается без изменений),
             //    метод Multi, умножающий каждый элемент массива на определённое число,
             //    свойство MaxCount, возвращающее количество максимальных элементов. 
             //    б) ** Создать библиотеку содержащую класс для работы с массивом. Продемонстрировать работу библиотеки
             //    в) *** Подсчитать частоту вхождения каждого элемента в массив (коллекция Dictionary<int,int>)
+            Console.WriteLine("Задание 3. Доработка класса.\n");
+
             #endregion
 
             #region Задание 4. Логин и пароль
@@ -50,6 +84,78 @@ namespace Lesson4
             //    ** б) Добавить конструктор и методы, которые загружают данные из файла и записывают данные в файл.
             //    ** в) Обработать возможные исключительные ситуации при работе с файлами.
             #endregion
+        }
+
+        /// <summary>
+        /// Определение количества пар элементов массива, в которых только одно число делится на 3
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <returns></returns>
+        static int countOfPairDiv3(int[] arr)
+        {
+            int count = 0;
+            for (int i = 0; i < arr.Length - 1; i++)
+            {
+                if ((arr[i] % 3 == 0 && arr[i + 1] % 3 != 0) ||
+                    (arr[i] % 3 != 0 && arr[i + 1] % 3 == 0))
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        /// <summary>
+        /// По нажатию Enter очищает экран
+        /// </summary>
+        static void next()
+        {
+            Console.Write("\nДля продолжения нажмите Enter..");
+            Console.ReadLine();
+            Console.Clear();
+        }
+    }
+
+    /// <summary>
+    /// Статический класс для второго задания о массивах
+    /// </summary>
+    static class ArrayTask2
+    {
+        /// <summary>
+        /// Определение количества пар элементов массива, в которых только одно число делится на 3
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <returns></returns>
+        public static int CountOfPairDiv3(int[] arr)
+        {
+            int count = 0;
+            for (int i = 0; i < arr.Length - 1; i++)
+            {
+                if ((arr[i] % 3 == 0 && arr[i + 1] % 3 != 0) ||
+                    (arr[i] % 3 != 0 && arr[i + 1] % 3 == 0))
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        /// <summary>
+        /// Считывание массива из файла
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static int[] ReadArrayFromFile(string path)
+        {
+            if (!File.Exists(path))
+                throw new FileNotFoundException($"Файл {path} не найден.");
+            
+            StreamReader sr = new StreamReader(path);
+
+            int[] result = Array.ConvertAll<string, int>(File.ReadAllLines(path), Convert.ToInt32);
+            
+            sr.Close();
+            return result;
         }
     }
 }
