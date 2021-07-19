@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 /// <summary>
 /// Автор - Кравчук Василий
@@ -14,7 +12,7 @@ namespace Lesson5
     {
         static void Main(string[] args)
         {
-            goto Label;
+            //goto Label;
             #region Задание 1. Корректность ввода логина.
             // 1. Создать программу, которая будет проверять корректность ввода логина.
             //    Корректным логином будет строка от 2 до 10 символов, содержащая только буквы латинского алфавита или цифры,
@@ -104,7 +102,7 @@ namespace Lesson5
                 Console.WriteLine(item.Key + " - " + item.Value);
             }
             next();
-        #endregion
+            #endregion
 
             #region Задание 3. Опредение перестановки.
             // 3. * Для двух строк написать метод, определяющий, является ли одна строка перестановкой другой.
@@ -119,9 +117,9 @@ namespace Lesson5
             Console.WriteLine($"Строка {a} является перестановкой {c}? - {transposition(a, c)}");
 
             next();
-        #endregion
+            #endregion
 
-        Label:;
+            //Label:;
             #region Задание 4. Три худших ученика.
             // 4. * Задача ЕГЭ.
             //    На вход программе подаются сведения о сдаче экзаменов учениками 9 - х классов некоторой средней школы.
@@ -138,9 +136,68 @@ namespace Lesson5
             //    имена трёх худших по среднему баллу учеников. Если среди остальных есть ученики,
             //    набравшие тот же средний балл, что и один из трёх худших, следует вывести и их фамилии и имена.
             Console.WriteLine("Задание 4. Три худших ученика.\n");
-            
-            #endregion
 
+            string incomingData = @"30
+Мумриков Пармен 5 4 1
+Пукай Андроник 5 5 5
+Новодранов Абрам 2 4 4
+Блятник Федот 1 5 2
+Прикольский Анисим 3 2 4
+Вралов Маркел 1 5 2
+Магазинер Николай 3 1 3
+Гавныкин Галактион 3 4 4
+Удобников Фаддей 1 5 2
+Криворуков Аникей 5 4 3
+Моторов Ипат 3 1 5
+Тюфякин Варфоломей 1 5 1
+Пиздякин Акинф 2 2 4
+Выродов Дорофей 1 2 2
+Голубец Зиновий 2 1 5
+Докукин Платон 2 1 4
+Каша Осип 5 3 4
+Недумов Марей 3 3 5
+Тяпкин Протас 2 2 1
+Гадов Алфёр 5 3 3
+Лихопой Акинф 2 1 2
+Удобников Фектист 1 2 5
+Нетудыхата Мирон 4 4 4
+Тюфякин Гурий 2 3 2
+Сисюк Власий 1 5 5
+Ящур Данил 2 3 1
+Новорусский Акиндин 2 4 5
+Тяпкин Галактион 1 2 2
+Недоедов Кондратий 4 1 1
+Скоропостижный Федос 5 2 3";
+
+            int countOfLearners = int.Parse(Regex.Match(incomingData, @"(^[0-9]{1,3})").ToString());
+            int ii;
+            int countOfWorst = 3;
+            int[] grades = new int[countOfLearners];
+            string[] learners = incomingData.Split(new string[] { ((char)13).ToString(), "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            string[] names = new string[countOfLearners];
+            string[] buf = new string[5];
+
+            // Формирование массива с Ф.И. и массива с суммой оценок
+            for (ii = 1; ii <= countOfLearners; ii++)
+            {
+                buf = learners[ii].Split(' ');
+                names[ii - 1] = buf[0] + " " + buf[1];
+                grades[ii - 1] = int.Parse(buf[2]) + int.Parse(buf[3]) + int.Parse(buf[4]);
+            }
+
+            Array.Sort(grades, names);
+
+            Console.WriteLine("Список учеников :\n" + incomingData);
+            Console.WriteLine("\nСписок худших :");
+            ii = 0;
+            while (grades[ii] != grades[ii + 1] || ii < countOfWorst)
+            {
+                Console.WriteLine($"{names[ii]} - {(double)grades[ii] / 3:F2}");
+                ii++;
+            }
+
+            next();
+            #endregion
         }
 
         /// <summary>
