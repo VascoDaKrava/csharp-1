@@ -11,7 +11,7 @@ namespace Lesson6
     {
         static void Main(string[] args)
         {
-            goto Label;
+            //goto Label;
             #region Задание 1. Делегаты.
             // 1. Изменить программу вывода таблицы функции так, чтобы можно было передавать функции типа double(double, double).
             //    Продемонстрировать работу на функции с функцией a * x ^ 2 и функцией a * sin(x).
@@ -82,9 +82,8 @@ namespace Lesson6
             Console.WriteLine($"\nmin = {minValue:F2}");
 
             next();
-        #endregion
+            #endregion
 
-        Label:;
             #region Задание 3. Коллекции и студенты.
             // 3. Переделать программу Пример использования коллекций для решения следующих задач:
             //    а) Подсчитать количество студентов учащихся на 5 и 6 курсах;
@@ -150,7 +149,7 @@ namespace Lesson6
             Console.WriteLine("Бакалавров:{0}", bakalavr);
             foreach (var v in list) Console.WriteLine(v.firstName);
             Console.WriteLine(DateTime.Now - dt);
-            
+
             Console.WriteLine($"\nНа 5-ом курсе : {countCourse5}");
             Console.WriteLine($"На 6-ом курсе : {countCourse6}");
 
@@ -160,17 +159,126 @@ namespace Lesson6
                 Console.WriteLine($"Возраст {item.Key}, количество студентов - {item.Value}");
             }
 
-            //list.Sort(list.);
+            Console.WriteLine("\nНеотсортиованный список студентов : ");
+            foreach (Student item in list)
+            {
+                Console.WriteLine($"{item.lastName} {item.firstName}, курс - {item.course}, возраст - {item.age}");
+            }
+
+            Console.WriteLine("\nСортировка по возрасту студента : ");
+            list.Sort(delegate (Student a, Student b)
+            {
+                return a.age < b.age ? -1 : 1;
+            });
+
+            foreach (Student item in list)
+            {
+                Console.WriteLine($"{item.lastName} {item.firstName}, курс - {item.course}, возраст - {item.age}");
+            }
+
+            Console.WriteLine("\nСортировка по курсу и возрасту студента : ");
+            // Т.к. лист уже отсортирован по возрасту, то достаточно его отсортировать только по курсу
+            // Иначе можно создать отдельный метод, который запустит спрва сортировку по возрасту, затем новую сортировку по курсу
+            list.Sort(delegate (Student a, Student b)
+            {
+                return a.course < b.course ? -1 : 1;
+            });
+
+            foreach (Student item in list)
+            {
+                Console.WriteLine($"{item.lastName} {item.firstName}, курс - {item.course}, возраст - {item.age}");
+            }
+
+            next();
+        #endregion
+
+        //Label:;
+            #region Задание 4. Считывание файла.
+            // 4. ** Считайте файл различными способами. Смотрите “Пример записи файла различными способами”.
+            //    Создайте методы, которые возвращают массив byte(FileStream, BufferedStream), строку для StreamReader и массив int для BinaryReader.
+
+            Console.WriteLine("Задание 4. Считывание файла.\n");
+            string path = "./students.csv";
+            byte[] arrayFS = FileStreamSampleRead(path);
+            byte[] arrayBS = BufferedStreamSampleRead(path);
+            string stringSR = StreamReaderStreamSampleRead(path);
+            int[] arrayBR = BinaryReaderSampleRead(path);
+
+            Console.WriteLine("Cчитано байт в режиме FileStream - " + arrayFS.Length);
+            Console.WriteLine("Cчитано байт в режиме BufferedStream - " + arrayBS.Length);
+            Console.WriteLine("Строка в режиме StreamReader - \n\n" + stringSR + "\n");
+            Console.WriteLine("Cчитано чисел в режиме BinaryReader - " + arrayBR.Length);
 
             next();
             #endregion
-
-            #region Задание 4. Считывание файла
-            // 4. ** Считайте файл различными способами. Смотрите “Пример записи файла различными способами”.
-            //    Создайте методы, которые возвращают массив byte(FileStream, BufferedStream), строку для StreamReader и массив int для BinaryReader.
-            #endregion
-
         }
+
+        #region Methods for Task 4
+        /// <summary>
+        /// Бинарное чтение файла в массив чисел, по 4 байта на каждое число. Если размер фала не кратен 4, то последние байты не считываются
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        static int[] BinaryReaderSampleRead(string path)
+        {
+            FileStream fs = new FileStream(path, FileMode.Open);
+            BinaryReader br = new BinaryReader(fs);
+            int[] result = new int[fs.Length / 4];
+            for (int i = 0; i < fs.Length / 4; i++)
+            {
+                result[i] = br.ReadInt32();
+            }
+            br.Close();
+            fs.Close();
+            return result;
+        }
+
+        /// <summary>
+        /// Чтение файла в строку
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        static string StreamReaderStreamSampleRead(string path)
+        {
+            StreamReader sr = new StreamReader(path);
+            string result = sr.ReadToEnd();
+            sr.Close();
+            return result;
+        }
+
+        /// <summary>
+        /// Чтение файла побайтно в массив байт через файловый поток
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        static byte[] FileStreamSampleRead(string path)
+        {
+            FileStream fs = new FileStream(path, FileMode.Open);
+            byte[] result = new byte[fs.Length];
+            for (int i = 0; i < fs.Length; i++)
+            {
+                result[i] = (byte)fs.ReadByte();
+            }
+            fs.Close();
+            return result;
+        }
+
+        /// <summary>
+        /// Чтение файла в массив байт через файловый поток и буфер
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        static byte[] BufferedStreamSampleRead(string path)
+        {
+            FileStream fs = new FileStream(path, FileMode.Open);
+            BufferedStream bs = new BufferedStream(fs, (int)fs.Length);
+            byte[] result = new byte[fs.Length];
+            bs.Read(result, 0, (int)fs.Length);
+            bs.Close();
+            fs.Close();
+            return result;
+        }
+        #endregion
 
         #region Methods for Task 3
         // Создаем метод для сравнения для экземпляров
@@ -375,9 +483,6 @@ namespace Lesson6
     }
 
     #region Delegats
-
-
-
     // Описываем делегат. В делегате описывается сигнатура методов, на
     // которые он сможет ссылаться в дальнейшем (хранить в себе)
     public delegate double Fun(double x);
