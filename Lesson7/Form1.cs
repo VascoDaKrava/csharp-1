@@ -22,6 +22,13 @@ namespace Lesson7
         private static List<Button> gameGuessButtons = new List<Button>();
         private static List<Label> labels = new List<Label>();
 
+        #region Fields for GameX2
+        private int requiredNumber;
+        private int minStep;
+        private int currentStep;
+        private int currentValue;
+        #endregion
+
         #region Methods
         /// <summary>
         ///  Включение или отключение списка кнопок
@@ -57,7 +64,55 @@ namespace Lesson7
         #endregion
 
         #region Methods for Game X2
+        /// <summary>
+        /// Обработчик нажатия Добавить 1
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonAdd1_Click(object sender, EventArgs e)
+        {
+            currentValue++;
+        }
 
+        /// <summary>
+        /// Обработчик нажатия *2
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonX2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Обработчик нажатия Отмена
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonUndo_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Обработчик нажатия Заново 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonRestart_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Определение минимального числа ходов
+        /// </summary>
+        /// <param name="a"></param>
+        /// <returns></returns>
+        private int minSteps(int a)
+        {
+            return a - (int)Math.Sqrt(a) * (int)Math.Sqrt(a) + (int)Math.Sqrt(a);
+        }
         #endregion
 
 
@@ -114,13 +169,20 @@ namespace Lesson7
             //       Используйте библиотечный обобщенный класс System.Collections.Generic.Stack<int> Stack.
             //    Вся логика игры должна быть реализована в классе с удвоителем.
 
-            int requiredNumber;
+            Random r = new Random();
+            requiredNumber = r.Next(0, 101);
+            minStep = minSteps(requiredNumber);
+            currentStep = 0;
+            currentValue = 1;
             currentPlace = currentPlaceEnum.GameX2;
             changeButtonsVisible(mainMenuButtons, false);
             changeButtonsVisible(gameX2Buttons, true);
             labelTop.Text = "Игра \"Удвоитель\"\n" +
                 "Необходимо получить число за минимальное количество ходов.";
-            //labelLeftBottom.
+            labelLeftTop.Text = $"Требуется получить {requiredNumber}.\n\n" +
+                $"Текущее значение : {currentValue}";
+            labelLeftBottom.Text = $"Минимальное число ходов:\n{minStep}\n\n" +
+                $"Текущий ход : {currentStep}";
         }
 
         /// <summary>
@@ -148,5 +210,6 @@ namespace Lesson7
             clearLabels(labels);
             changeButtonsVisible(mainMenuButtons, true);
         }
+
     }
 }
