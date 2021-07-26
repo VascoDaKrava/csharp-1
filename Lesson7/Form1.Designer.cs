@@ -30,6 +30,8 @@ namespace Lesson7
         private void InitializeComponent()
         {
             this.GridForMainWindow = new System.Windows.Forms.TableLayoutPanel();
+            this.labelCenter = new System.Windows.Forms.Label();
+            this.buttonInputNumber = new System.Windows.Forms.Button();
             this.labelTop = new System.Windows.Forms.Label();
             this.labelLeftBottom = new System.Windows.Forms.Label();
             this.buttonRestart = new System.Windows.Forms.Button();
@@ -52,6 +54,8 @@ namespace Lesson7
             this.GridForMainWindow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 180F));
             this.GridForMainWindow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.GridForMainWindow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.GridForMainWindow.Controls.Add(this.labelCenter, 2, 2);
+            this.GridForMainWindow.Controls.Add(this.buttonInputNumber, 2, 4);
             this.GridForMainWindow.Controls.Add(this.labelTop, 1, 0);
             this.GridForMainWindow.Controls.Add(this.labelLeftBottom, 1, 3);
             this.GridForMainWindow.Controls.Add(this.buttonRestart, 3, 4);
@@ -104,6 +108,27 @@ namespace Lesson7
             this.GridForMainWindow.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.GridForMainWindow.Size = new System.Drawing.Size(800, 450);
             this.GridForMainWindow.TabIndex = 0;
+            // 
+            // labelCenter
+            // 
+            this.labelCenter.AutoSize = true;
+            this.labelCenter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelCenter.Location = new System.Drawing.Point(313, 75);
+            this.labelCenter.Name = "labelCenter";
+            this.labelCenter.Size = new System.Drawing.Size(174, 30);
+            this.labelCenter.TabIndex = 12;
+            this.labelCenter.Text = "labelCenter";
+            // 
+            // buttonInputNumber
+            // 
+            this.buttonInputNumber.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonInputNumber.Location = new System.Drawing.Point(313, 138);
+            this.buttonInputNumber.Name = "buttonInputNumber";
+            this.buttonInputNumber.Size = new System.Drawing.Size(174, 24);
+            this.buttonInputNumber.TabIndex = 11;
+            this.buttonInputNumber.Text = "Ввести число";
+            this.buttonInputNumber.UseVisualStyleBackColor = true;
+            this.buttonInputNumber.Click += new System.EventHandler(this.inputNumber_Click);
             // 
             // labelTop
             // 
@@ -192,6 +217,7 @@ namespace Lesson7
             this.buttonStartGameGuess.TabIndex = 1;
             this.buttonStartGameGuess.Text = "Игра \"Угадай число\"";
             this.buttonStartGameGuess.UseVisualStyleBackColor = true;
+            this.buttonStartGameGuess.Click += new System.EventHandler(this.buttonStartGameGuess_Click);
             // 
             // buttonStartGameX2
             // 
@@ -233,6 +259,7 @@ namespace Lesson7
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.GridForMainWindow);
             this.Name = "MainWindow";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Lesson7";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.GridForMainWindow.ResumeLayout(false);
@@ -255,6 +282,8 @@ namespace Lesson7
         private System.Windows.Forms.Label labelTop;
         private System.Windows.Forms.Label labelLeftBottom;
         private System.Windows.Forms.Label labelLeftTop;
+        private System.Windows.Forms.Label labelCenter;
+        private System.Windows.Forms.Button buttonInputNumber;
     }
 }
 

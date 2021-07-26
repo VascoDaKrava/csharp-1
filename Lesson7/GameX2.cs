@@ -96,8 +96,21 @@ namespace Lesson7
         /// <returns></returns>
         private int minSteps(int a)
         {
-            a = 8;
-            return (int)Math.Log(a, 2) + (a - 2 ^ (int)Math.Log(a, 2));
+            int result = 0;
+            while (a != 1)
+            {
+                if (a % 2 == 0)
+                {
+                    a /= 2;
+                    result++;
+                }
+                else
+                {
+                    a--;
+                    result++;
+                }
+            }
+            return result;
         }
 
         /// <summary>
@@ -110,23 +123,21 @@ namespace Lesson7
             labelLeftBottom.Text = $"Минимальное число ходов:\n{minStep}\n\n" +
                 $"Текущий ход : {steps.Count - 1}";
             if (steps.Count > minStep && steps.Peek() != requiredNumber)
-                gameOverX2();
+            {
+                labelTop.Text = "Игра \"Удвоитель\"\n" +
+                    "Вы проиграли.";
+                stopGameX2();
+            }
             if (steps.Peek() == requiredNumber)
-                gameWinX2();
+            {
+                labelTop.Text = "Игра \"Удвоитель\"\n" +
+                    "Вы выиграли!";
+                stopGameX2();
+            }
         }
 
-        private void gameOverX2()
+        private void stopGameX2()
         {
-            labelTop.Text = "Игра \"Удвоитель\"\n" +
-    "Вы проиграли.";
-            changeButtonsEnabled(gameX2Buttons, false);
-            buttonBack.Enabled = true;
-        }
-
-        private void gameWinX2()
-        {
-            labelTop.Text = "Игра \"Удвоитель\"\n" +
-    "Вы выиграли!";
             changeButtonsEnabled(gameX2Buttons, false);
             buttonBack.Enabled = true;
         }

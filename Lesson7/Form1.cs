@@ -24,6 +24,7 @@ namespace Lesson7
             labels.Add(labelTop);
             labels.Add(labelLeftTop);
             labels.Add(labelLeftBottom);
+            labels.Add(labelCenter);
 
             mainMenuButtons.Add(buttonStartGameGuess);
             mainMenuButtons.Add(buttonStartGameX2);
@@ -35,8 +36,12 @@ namespace Lesson7
             gameX2Buttons.Add(buttonRestart);
             gameX2Buttons.Add(buttonBack);
 
+            gameGuessButtons.Add(buttonInputNumber);
+            gameGuessButtons.Add(buttonBack);
+
             currentPlace = currentPlaceEnum.MainMenu;
             changeButtonsVisible(gameX2Buttons, false);
+            changeButtonsVisible(gameGuessButtons, false);
             clearLabels(labels);
         }
 
@@ -136,6 +141,5 @@ namespace Lesson7
             clearLabels(labels);
             changeButtonsVisible(mainMenuButtons, true);
         }
-
     }
 }
