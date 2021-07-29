@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 
 namespace TrueFalseEditor
@@ -81,10 +83,17 @@ namespace TrueFalseEditor
         /// </summary>
         public void Load()
         {
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Question>));
-            var stream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
-            list = (List<Question>)xmlSerializer.Deserialize(stream);
-            stream.Close();
+            try
+            {
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Question>));
+                FileStream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+                list = (List<Question>)xmlSerializer.Deserialize(stream);
+                stream.Close();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.InnerException.Message, e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         /// <summary>
@@ -93,7 +102,7 @@ namespace TrueFalseEditor
         public void Save()
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Question>));
-            var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write);
+            FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write);
             xmlSerializer.Serialize(stream, list);
             stream.Close();
         }

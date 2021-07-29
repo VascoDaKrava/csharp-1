@@ -45,6 +45,7 @@ namespace TrueFalseEditor
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.tbQuestion = new System.Windows.Forms.TextBox();
+            this.menuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudNumber)).BeginInit();
@@ -68,6 +69,7 @@ namespace TrueFalseEditor
             this.menuItemOpen,
             this.menuItemSave,
             this.toolStripSeparator1,
+            this.menuItemHelp,
             this.menuItemExit});
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -187,13 +189,21 @@ namespace TrueFalseEditor
             // 
             // tbQuestion
             // 
+            this.tbQuestion.BackColor = System.Drawing.SystemColors.Info;
             this.tbQuestion.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbQuestion.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tbQuestion.Font = new System.Drawing.Font("Times New Roman", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tbQuestion.Location = new System.Drawing.Point(0, 25);
             this.tbQuestion.Multiline = true;
             this.tbQuestion.Name = "tbQuestion";
             this.tbQuestion.Size = new System.Drawing.Size(800, 371);
             this.tbQuestion.TabIndex = 2;
+            // 
+            // menuItemHelp
+            // 
+            this.menuItemHelp.Name = "menuItemHelp";
+            this.menuItemHelp.Size = new System.Drawing.Size(180, 22);
+            this.menuItemHelp.Text = "Help";
+            this.menuItemHelp.Click += new System.EventHandler(this.menuItemHelp_Click);
             // 
             // Form1
             // 
@@ -203,7 +213,9 @@ namespace TrueFalseEditor
             this.Controls.Add(this.tbQuestion);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStrip1);
+            this.MinimumSize = new System.Drawing.Size(700, 400);
             this.Name = "Form1";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TrueFalse Editor";
             this.toolStrip1.ResumeLayout(false);
@@ -233,6 +245,7 @@ namespace TrueFalseEditor
         private System.Windows.Forms.RadioButton rbYes;
         private System.Windows.Forms.RadioButton rbNo;
         private System.Windows.Forms.NumericUpDown nudNumber;
+        private System.Windows.Forms.ToolStripMenuItem menuItemHelp;
     }
 }
 
